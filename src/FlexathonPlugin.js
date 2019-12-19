@@ -1,8 +1,9 @@
 import React from 'react';
-import { VERSION } from '@twilio/flex-ui';
+import { VERSION, FlexContext } from '@twilio/flex-ui';
 import { FlexPlugin } from 'flex-plugin';
 import { loadCustomCRMContainer } from './components/examples/CRMContainer'
 import reducers, { namespace } from './states';
+import { registerActionExtensions } from './eventListeners/actionsFramework'
 
 const PLUGIN_NAME = 'FlexathonPlugin';
 
@@ -262,7 +263,12 @@ export default class FlexathonPlugin extends FlexPlugin {
     //flex.TaskListItem.defaultProps.itemSize = "LargeSelected"
     //manager.strings.TaskExtraInfo = `<h1>This is my extra info</h1><h2>{{task.attributes.callType}}</h2>`
 
+    registerActionExtensions();
     loadCustomCRMContainer.bind(this)(flex, manager);
+    flex.AgentDesktopView.Panel1.defaultProps.splitterOrientation = "vertical"
+    flex.AgentDesktopView.defaultProps.splitterOptions = {
+      initialFirstPanelSize: "10%"
+    }
 
   }
 
